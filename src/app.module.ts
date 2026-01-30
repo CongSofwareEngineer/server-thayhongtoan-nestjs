@@ -15,6 +15,7 @@ import { ClassModule } from './module/class/class.module'
 import { StudentModule } from './module/student/student.module'
 import { AttendanceModule } from './module/attendance/attendance.module'
 import { TeacherModule } from './module/teacher/teacher.module'
+import { PaymentModule } from './module/payment/payment.module'
 
 export const throttlerOptions = {
   throttlers: [
@@ -54,6 +55,7 @@ export const throttlerOptions = {
     StudentModule,
     AttendanceModule,
     TeacherModule,
+    PaymentModule,
   ],
   providers: [
     {

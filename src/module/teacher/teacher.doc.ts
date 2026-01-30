@@ -17,11 +17,10 @@ export const TeacherDoc = {
     schema: {
       type: 'object',
       properties: {
-        data: {
-          type: 'string',
-          description: 'Encrypted data containing: sdt, password',
-        },
+        sdt: { type: 'string', example: '0123456789' },
+        password: { type: 'string', example: 'password123' },
       },
+      required: ['sdt', 'password'],
     },
   } as ApiBodyOptions,
 
@@ -29,11 +28,15 @@ export const TeacherDoc = {
     schema: {
       type: 'object',
       properties: {
-        data: {
-          type: 'string',
-          description: 'Encrypted data containing: name, sdt, password, isAdmin, age, sex (male/female/other), image (optional)',
-        },
+        name: { type: 'string', example: 'Tran Van B' },
+        sdt: { type: 'string', example: '0123456789' },
+        password: { type: 'string', example: 'password123' },
+        isAdmin: { type: 'boolean', default: false },
+        age: { type: 'number', example: 30 },
+        sex: { type: 'string', enum: ['male', 'female', 'other'], default: 'male' },
+        image: { type: 'string', example: 'https://...', nullable: true },
       },
+      required: ['name', 'sdt', 'password', 'isAdmin', 'age', 'sex'],
     },
   } as ApiBodyOptions,
 
@@ -41,10 +44,13 @@ export const TeacherDoc = {
     schema: {
       type: 'object',
       properties: {
-        data: {
-          type: 'string',
-          description: 'Encrypted data containing: name, sdt, password, isAdmin, age, sex (male/female/other), image (optional)',
-        },
+        name: { type: 'string' },
+        sdt: { type: 'string' },
+        password: { type: 'string' },
+        isAdmin: { type: 'boolean' },
+        age: { type: 'number' },
+        sex: { type: 'string', enum: ['male', 'female', 'other'] },
+        image: { type: 'string', nullable: true },
       },
     },
   } as ApiBodyOptions,

@@ -11,11 +11,11 @@ export class Class {
   @Prop({ required: true })
   price: number
 
-  @Prop({ required: true })
-  startTime: Date
+  @Prop()
+  startTime?: Date
 
-  @Prop({ required: true })
-  endTime: Date
+  @Prop()
+  endTime?: Date
 
   @Prop({ required: true })
   numberStudent: number

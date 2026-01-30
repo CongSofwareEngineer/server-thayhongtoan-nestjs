@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Query, Res, UseGuards } from '@nestjs/common'
 import { RegisterService } from './register.service'
-import { ApiBearerAuth, ApiBody, ApiHeader, ApiParam, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger'
 import { formatRes } from 'src/utils/function'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { RegisterDoc } from './register.doc'
@@ -11,7 +11,6 @@ import { RegisterDoc } from './register.doc'
 export class RegisterController {
   constructor(private registerService: RegisterService) { }
 
-  @ApiHeader(RegisterDoc.authorization)
   @UseGuards(JwtAuthGuard)
   @Get('all')
   async getAll(@Res() res, @Query() query) {

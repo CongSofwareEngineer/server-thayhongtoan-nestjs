@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Query, Res, UseGuards } from '@nestjs/common'
 import { AttendanceService } from './attendance.service'
-import { ApiBearerAuth, ApiBody, ApiHeader, ApiParam, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger'
 import { formatRes } from 'src/utils/function'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { AttendanceDoc } from './attendance.doc'
@@ -18,7 +18,6 @@ export class AttendanceController {
     return formatRes(res, data)
   }
 
-  @ApiHeader(AttendanceDoc.authorization)
   @ApiParam(AttendanceDoc.idParam)
   @Delete('delete/:id')
   async delete(@Res() res, @Param() param) {
@@ -26,7 +25,6 @@ export class AttendanceController {
     return formatRes(res, data)
   }
 
-  @ApiHeader(AttendanceDoc.authorization)
   @ApiParam(AttendanceDoc.idParam)
   @ApiBody(AttendanceDoc.updateBody)
   @Post('update/:id')
@@ -35,7 +33,6 @@ export class AttendanceController {
     return formatRes(res, data)
   }
 
-  @ApiHeader(AttendanceDoc.authorization)
   @ApiBody(AttendanceDoc.createBody)
   @Post('create')
   async create(@Res() res, @Body() body) {

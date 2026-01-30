@@ -10,20 +10,6 @@ export class LoggerMiddleware implements NestMiddleware {
       }
 
       console.log(`[${req.method}] ${req.originalUrl}`)
-
-      const url = req.originalUrl
-      const isPostOrPut = req.method === 'POST' || req.method === 'PUT'
-
-      // 1. Decrypt body for write operations
-      // We still skip decryption for specific system/auth routes if necessary, 
-      // but generally we try to decrypt if there's data.
-      // if (isPostOrPut && req.body?.data) {
-      //   req.body = decryptData(req.body.data)
-      //   if (!req.body) {
-      //     return this.sendUnauthorizedResponse(res, 'Invalid encrypted data')
-      //   }
-      // }
-
       next()
     } catch (error) {
       console.error('Middleware Error:', error)

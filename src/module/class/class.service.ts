@@ -3,15 +3,13 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Class } from './schemas/class.schema'
 import { Model } from 'mongoose'
 import { FunService } from 'src/utils/funcService'
-import { decryptData } from 'src/utils/crypto'
 import { getIdObject } from 'src/utils/function'
 
 @Injectable()
 export class ClassService {
   constructor(@InjectModel(Class.name) private classModel: Model<Class>) { }
 
-  async create(dataDecode: string): Promise<Class | null> {
-    const body = decryptData(dataDecode)
+  async create(body: any): Promise<Class | null> {
     if (!body) {
       return null
     }
@@ -22,8 +20,7 @@ export class ClassService {
     return FunService.deleteDataByID(this.classModel, getIdObject(id))
   }
 
-  async update(id: string, dataDecode: string): Promise<Class | null> {
-    const body = decryptData(dataDecode)
+  async update(id: string, body: any): Promise<Class | null> {
     if (!body) {
       return null
     }

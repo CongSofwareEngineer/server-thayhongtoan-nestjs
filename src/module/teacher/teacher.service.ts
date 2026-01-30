@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Teacher } from './schemas/teacher.schema'
 import { Model } from 'mongoose'
 import { FunService } from 'src/utils/funcService'
-import { decryptData } from 'src/utils/crypto'
 import { getIdObject } from 'src/utils/function'
 import { AuthService } from '../auth/auth.service'
 import * as bcrypt from 'bcrypt'
@@ -19,8 +18,11 @@ export class TeacherService {
     return FunService.getDataByLimit(this.teacherModel, query)
   }
 
-  async login(dataDecode: string) {
-    const body = decryptData(dataDecode)
+  async findById(id: string): Promise<Teacher | null> {
+    return this.teacherModel.findById(getIdObject(id))
+  }
+
+  async login(body: any) {
     if (!body || !body.sdt || !body.password) {
       throw new UnauthorizedException('Invalid login data')
     }
@@ -39,8 +41,7 @@ export class TeacherService {
     return tokens
   }
 
-  async create(dataDecode: string): Promise<Teacher | null> {
-    const body = decryptData(dataDecode)
+  async create(body: any): Promise<Teacher | null> {
     if (!body || !body.password) {
       return null
     }
@@ -56,8 +57,7 @@ export class TeacherService {
     return FunService.deleteDataByID(this.teacherModel, getIdObject(id))
   }
 
-  async update(id: string, dataDecode: string): Promise<Teacher | null> {
-    const body = decryptData(dataDecode)
+  async update(id: string, body: any): Promise<Teacher | null> {
     if (!body) {
       return null
     }

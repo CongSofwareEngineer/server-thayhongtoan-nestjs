@@ -1,15 +1,14 @@
 import { Controller, Get, Post, Request, Res } from '@nestjs/common'
 import { AuthService } from './auth.service'
 import { formatRes } from 'src/utils/function'
-import { ApiHeader, ApiTags } from '@nestjs/swagger'
-import { AuthDoc } from './auth.doc'
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger'
 
+@ApiBearerAuth()
 @ApiTags('auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) { }
 
-  @ApiHeader(AuthDoc.authorization)
   @Post('/refresh')
   async refreshToken(@Res() res, @Request() req) {
     const token = req.headers.authorization

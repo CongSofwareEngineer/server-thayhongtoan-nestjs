@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Query, Res, UseGuards } from '@nestjs/common'
 import { TeacherService } from './teacher.service'
-import { ApiBearerAuth, ApiBody, ApiHeader, ApiParam, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger'
 import { formatRes } from 'src/utils/function'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { TeacherDoc } from './teacher.doc'
@@ -14,7 +14,7 @@ export class TeacherController {
   @ApiBody(TeacherDoc.loginBody)
   @Post('login')
   async login(@Res() res, @Body() body) {
-    const data = await this.teacherService.login(body.data)
+    const data = await this.teacherService.login(body)
     return formatRes(res, data)
   }
 
@@ -25,7 +25,6 @@ export class TeacherController {
     return formatRes(res, data)
   }
 
-  @ApiHeader(TeacherDoc.authorization)
   @UseGuards(JwtAuthGuard)
   @ApiParam(TeacherDoc.idParam)
   @Delete('delete/:id')
@@ -34,22 +33,20 @@ export class TeacherController {
     return formatRes(res, data)
   }
 
-  @ApiHeader(TeacherDoc.authorization)
   @UseGuards(JwtAuthGuard)
   @ApiParam(TeacherDoc.idParam)
   @ApiBody(TeacherDoc.updateBody)
   @Post('update/:id')
   async update(@Res() res, @Param() param, @Body() body) {
-    const data = await this.teacherService.update(param.id, body.data)
+    const data = await this.teacherService.update(param.id, body)
     return formatRes(res, data)
   }
 
-  @ApiHeader(TeacherDoc.authorization)
   @UseGuards(JwtAuthGuard)
   @ApiBody(TeacherDoc.createBody)
   @Post('create')
   async create(@Res() res, @Body() body) {
-    const data = await this.teacherService.create(body.data)
+    const data = await this.teacherService.create(body)
     return formatRes(res, data)
   }
 }

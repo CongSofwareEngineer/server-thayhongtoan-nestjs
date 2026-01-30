@@ -3,7 +3,6 @@ import { InjectModel } from '@nestjs/mongoose'
 import { Register } from './schemas/register'
 import { Model } from 'mongoose'
 import { FunService } from 'src/utils/funcService'
-import { decryptData } from 'src/utils/crypto'
 import { getIdObject } from 'src/utils/function'
 
 @Injectable()
@@ -14,11 +13,11 @@ export class RegisterService {
     return FunService.getDataByLimit(this.registerModel, query)
   }
 
-  async create(dataDecode: string): Promise<Register | null> {
-    const body = decryptData(dataDecode)
+  async create(body: any): Promise<Register | null> {
     if (!body) {
       return null
     }
+
     return FunService.create(this.registerModel, body)
   }
 
@@ -26,11 +25,11 @@ export class RegisterService {
     return FunService.deleteDataByID(this.registerModel, getIdObject(id))
   }
 
-  async update(id: string, dataDecode: string): Promise<Register | null> {
-    const body = decryptData(dataDecode)
+  async update(id: string, body: any): Promise<Register | null> {
     if (!body) {
       return null
     }
+
     return FunService.updateData(this.registerModel, getIdObject(id), body)
   }
 }

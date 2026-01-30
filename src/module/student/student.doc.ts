@@ -17,11 +17,14 @@ export const StudentDoc = {
     schema: {
       type: 'object',
       properties: {
-        data: {
-          type: 'string',
-          description: 'Encrypted data containing: image (optional), name, age, idClass, status (active/stop), numberPhoneParent',
-        },
+        name: { type: 'string', example: 'Nguyen Van A' },
+        age: { type: 'number', example: 10 },
+        idClass: { type: 'string', example: '65b8f...' },
+        status: { type: 'string', enum: ['active', 'stop'], default: 'active' },
+        numberPhoneParent: { type: 'string', example: '0987654321' },
+        image: { type: 'string', example: 'https://...', nullable: true },
       },
+      required: ['name', 'age', 'idClass', 'numberPhoneParent'],
     },
   } as ApiBodyOptions,
 
@@ -29,10 +32,12 @@ export const StudentDoc = {
     schema: {
       type: 'object',
       properties: {
-        data: {
-          type: 'string',
-          description: 'Encrypted data containing: image (optional), name, age, idClass, status (active/stop), numberPhoneParent',
-        },
+        name: { type: 'string' },
+        age: { type: 'number' },
+        idClass: { type: 'string' },
+        status: { type: 'string', enum: ['active', 'stop'] },
+        numberPhoneParent: { type: 'string' },
+        image: { type: 'string', nullable: true },
       },
     },
   } as ApiBodyOptions,

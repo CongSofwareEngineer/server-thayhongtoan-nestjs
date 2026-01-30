@@ -1,10 +1,9 @@
 import { Injectable, Query } from '@nestjs/common'
 import { InjectModel } from '@nestjs/mongoose'
 import { Student } from './schemas/student.schema'
-import { Model } from 'mongoose'
 import { FunService } from 'src/utils/funcService'
-import { decryptData } from 'src/utils/crypto'
 import { getIdObject } from 'src/utils/function'
+import { Model } from 'mongoose'
 
 @Injectable()
 export class StudentService {
@@ -14,8 +13,7 @@ export class StudentService {
     return FunService.getDataByLimit(this.studentModel, query)
   }
 
-  async create(dataDecode: string): Promise<Student | null> {
-    const body = decryptData(dataDecode)
+  async create(body: any): Promise<Student | null> {
     if (!body) {
       return null
     }
@@ -26,8 +24,7 @@ export class StudentService {
     return FunService.deleteDataByID(this.studentModel, getIdObject(id))
   }
 
-  async update(id: string, dataDecode: string): Promise<Student | null> {
-    const body = decryptData(dataDecode)
+  async update(id: string, body: any): Promise<Student | null> {
     if (!body) {
       return null
     }
