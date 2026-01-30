@@ -5,7 +5,7 @@ import { Student } from '../student/schemas/student.schema'
 import { Class } from '../class/schemas/class.schema'
 import { Model } from 'mongoose'
 import { FunService } from 'src/utils/funcService'
-import { getIdObject } from 'src/utils/function'
+import { getIdObject, getPageLimitSkip } from 'src/utils/function'
 
 @Injectable()
 export class PaymentService {
@@ -16,7 +16,8 @@ export class PaymentService {
   ) { }
 
   async getAll(@Query() query) {
-    return FunService.getDataByLimit(this.paymentModel, query)
+    const { skip, limit } = getPageLimitSkip(query)
+    return this.paymentModel.find().skip(skip).limit(limit).populate(['idStudent', 'idClass']).exec()
   }
 
   async create(body: any): Promise<Payment | null> {
@@ -81,7 +82,6 @@ export class PaymentService {
         student: {
           id: student._id,
           name: student.name,
-          numberPhoneParent: student.numberPhoneParent,
         },
         payment: payment ? {
           amount: payment.amount,
