@@ -19,14 +19,15 @@ export class Student {
   @Prop({ required: true })
   age: number
 
-  @Prop({ required: true })
-  idClass: string
+  @Prop({ type: Types.ObjectId, ref: 'Class' })
+  idClass?: Types.ObjectId
+
+  @Prop({ type: Types.ObjectId, ref: 'Parent' })
+  idParent: Types.ObjectId
 
   @Prop({ required: true, enum: StudentStatus, default: StudentStatus.ACTIVE })
   status: StudentStatus
 
-  @Prop({ required: true })
-  numberPhoneParent: string
 }
 export type StudentDocument = HydratedDocument<Student>;
 export const StudentSchema = SchemaFactory.createForClass(Student)

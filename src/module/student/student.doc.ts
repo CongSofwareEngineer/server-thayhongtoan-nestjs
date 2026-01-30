@@ -19,12 +19,13 @@ export const StudentDoc = {
       properties: {
         name: { type: 'string', example: 'Nguyen Van A' },
         age: { type: 'number', example: 10 },
-        idClass: { type: 'string', example: '65b8f...' },
+        idClass: { type: 'string', example: '65b8f...', nullable: true },
+        idParent: { type: 'string', example: '65b8f...', nullable: true },
+
         status: { type: 'string', enum: ['active', 'stop'], default: 'active' },
-        numberPhoneParent: { type: 'string', example: '0987654321' },
         image: { type: 'string', example: 'https://...', nullable: true },
       },
-      required: ['name', 'age', 'idClass', 'numberPhoneParent'],
+      required: ['name', 'age'],
     },
   } as ApiBodyOptions,
 
@@ -35,8 +36,8 @@ export const StudentDoc = {
         name: { type: 'string' },
         age: { type: 'number' },
         idClass: { type: 'string' },
+        idParent: { type: 'string' },
         status: { type: 'string', enum: ['active', 'stop'] },
-        numberPhoneParent: { type: 'string' },
         image: { type: 'string', nullable: true },
       },
     },

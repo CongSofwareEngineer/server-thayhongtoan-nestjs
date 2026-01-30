@@ -30,4 +30,8 @@ export class StudentService {
     }
     return FunService.updateData(this.studentModel, getIdObject(id), body)
   }
+
+  async getFullInfo(id: string): Promise<Student | null> {
+    return this.studentModel.findById(getIdObject(id)).populate(['idClass', 'idParent']).exec()
+  }
 }

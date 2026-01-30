@@ -23,8 +23,15 @@ export class Class {
   @Prop()
   note?: string
 
+
   @Prop({ type: Object })
   attributes?: Record<string, any>
 }
 export type ClassDocument = HydratedDocument<Class>;
 export const ClassSchema = SchemaFactory.createForClass(Class)
+
+ClassSchema.virtual('students', {
+  ref: 'Student',
+  localField: '_id',
+  foreignField: 'idClass',
+})

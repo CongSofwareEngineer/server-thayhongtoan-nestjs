@@ -41,4 +41,12 @@ export class StudentController {
     const data = await this.studentService.create(body)
     return formatRes(res, data)
   }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiParam(StudentDoc.idParam)
+  @Post('get-full/:id')
+  async getFull(@Res() res, @Param() param) {
+    const data = await this.studentService.getFullInfo(param.id)
+    return formatRes(res, data)
+  }
 }

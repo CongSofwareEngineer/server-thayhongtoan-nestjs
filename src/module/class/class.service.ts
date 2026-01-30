@@ -26,4 +26,8 @@ export class ClassService {
     }
     return FunService.updateData(this.classModel, getIdObject(id), body)
   }
+
+  async getFullInfo(id: string): Promise<Class | null> {
+    return this.classModel.findById(getIdObject(id)).populate('students').exec()
+  }
 }

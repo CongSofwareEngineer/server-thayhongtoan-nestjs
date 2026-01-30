@@ -35,4 +35,12 @@ export class ClassController {
     const data = await this.classService.create(body)
     return formatRes(res, data)
   }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiParam(ClassDoc.idParam)
+  @Post('get-full/:id')
+  async getFull(@Res() res, @Param() param) {
+    const data = await this.classService.getFullInfo(param.id)
+    return formatRes(res, data)
+  }
 }
