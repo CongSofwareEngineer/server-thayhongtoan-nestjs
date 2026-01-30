@@ -12,7 +12,7 @@ async function bootstrap() {
 
   // Security headers
   app.use(helmet())
-  if (process.env.DOMAIN_VALID) {
+  if (process.env.ENABLE_REDIS) {
     app.connectMicroservice<MicroserviceOptions>({
       transport: Transport.REDIS,
       options: {
@@ -30,7 +30,7 @@ async function bootstrap() {
   logger.log('Microservice is listening')
 
   let listDomain: boolean | string[] = true
-  if (process.env.DOMAIN_VALID) {
+  if (process.env.ENABLE_LIMIT_DOMAIN) {
     listDomain = process.env.DOMAIN_VALID.split(',')
   }
 
