@@ -8,7 +8,6 @@ import { TeacherService } from '../teacher/teacher.service'
 
 @ApiBearerAuth()
 @ApiTags('Payment')
-@UseGuards(JwtAuthGuard)
 @Controller('payment')
 export class PaymentController {
   constructor(
@@ -22,6 +21,7 @@ export class PaymentController {
     return formatRes(res, data)
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiParam(PaymentDoc.idParam)
   @Delete('delete/:id')
   async delete(@Res() res, @Param() param) {
@@ -29,6 +29,7 @@ export class PaymentController {
     return formatRes(res, data)
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiParam(PaymentDoc.idParam)
   @ApiBody(PaymentDoc.updateBody)
   @Post('update/:id')
@@ -37,6 +38,7 @@ export class PaymentController {
     return formatRes(res, data)
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiBody(PaymentDoc.createBody)
   @Post('create')
   async create(@Res() res, @Body() body, @Req() req) {
@@ -49,6 +51,7 @@ export class PaymentController {
     return formatRes(res, data)
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiBody(PaymentDoc.bulkUpsertBody)
   @Post('batch-update')
   async bulkUpsert(@Res() res, @Body() body, @Req() req) {

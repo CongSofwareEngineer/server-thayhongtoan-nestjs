@@ -28,7 +28,7 @@ export class TeacherService {
       throw new UnauthorizedException('Invalid login data')
     }
 
-    const teacher = await this.teacherModel.findOne({ sdt: body.sdt })
+    const teacher = await this.teacherModel.findOne({ sdt: body.sdt }).select('+password')
     if (!teacher) {
       throw new UnauthorizedException('Teacher not found')
     }
@@ -39,7 +39,14 @@ export class TeacherService {
     }
 
     const tokens = this.authService.generateAuth(teacher._id, teacher.sdt)
-    return tokens
+    
+    const teacherObject = teacher.toObject()
+    delete teacherObject.password
+
+    return {
+      teacher: teacherObject,
+      tokens
+    }
   }
 
   async create(body: any): Promise<Teacher | null> {

@@ -7,7 +7,6 @@ import { StudentDoc } from './student.doc'
 
 @ApiBearerAuth()
 @ApiTags('Student')
-@UseGuards(JwtAuthGuard)
 @Controller('student')
 export class StudentController {
   constructor(private studentService: StudentService) { }
@@ -18,6 +17,7 @@ export class StudentController {
     return formatRes(res, data)
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiParam(StudentDoc.idParam)
   @Delete('delete/:id')
   async delete(@Res() res, @Param() param) {
@@ -25,6 +25,7 @@ export class StudentController {
     return formatRes(res, data)
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiParam(StudentDoc.idParam)
   @ApiBody(StudentDoc.updateBody)
   @Post('update/:id')
@@ -33,6 +34,7 @@ export class StudentController {
     return formatRes(res, data)
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiBody(StudentDoc.createBody)
   @Post('create')
   async create(@Res() res, @Body() body) {

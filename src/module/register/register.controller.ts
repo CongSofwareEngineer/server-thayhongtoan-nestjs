@@ -11,7 +11,6 @@ import { RegisterDoc } from './register.doc'
 export class RegisterController {
   constructor(private registerService: RegisterService) { }
 
-  @UseGuards(JwtAuthGuard)
   @Get('all')
   async getAll(@Res() res, @Query() query) {
     const data = await this.registerService.getAll(query)

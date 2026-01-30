@@ -15,10 +15,21 @@ export class TeacherController {
   @Post('login')
   async login(@Res() res, @Body() body) {
     const data = await this.teacherService.login(body)
-    return formatRes(res, data)
+    res.cookie('tokenAccess', data.tokens.tokenAccess, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 15 * 60 * 1000,//15 min
+    })
+    res.cookie('tokenRefresh', data.tokens.tokenRefresh, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'strict',
+      maxAge: 15 * 24 * 60 * 60 * 1000,//15 days
+    })
+    return formatRes(res, { teacher: data.teacher })
   }
 
-  @UseGuards(JwtAuthGuard)
   @Get('all')
   async getAll(@Res() res, @Query() query) {
     const data = await this.teacherService.getAll(query)

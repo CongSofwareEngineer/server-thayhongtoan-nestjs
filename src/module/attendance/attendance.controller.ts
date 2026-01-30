@@ -7,7 +7,6 @@ import { AttendanceDoc } from './attendance.doc'
 
 @ApiBearerAuth()
 @ApiTags('Attendance')
-@UseGuards(JwtAuthGuard)
 @Controller('attendance')
 export class AttendanceController {
   constructor(private attendanceService: AttendanceService) { }
@@ -18,6 +17,7 @@ export class AttendanceController {
     return formatRes(res, data)
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiParam(AttendanceDoc.idParam)
   @Delete('delete/:id')
   async delete(@Res() res, @Param() param) {
@@ -25,6 +25,7 @@ export class AttendanceController {
     return formatRes(res, data)
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiParam(AttendanceDoc.idParam)
   @ApiBody(AttendanceDoc.updateBody)
   @Post('update/:id')
@@ -33,6 +34,7 @@ export class AttendanceController {
     return formatRes(res, data)
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiBody(AttendanceDoc.createBody)
   @Post('create')
   async create(@Res() res, @Body() body) {

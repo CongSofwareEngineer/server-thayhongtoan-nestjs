@@ -7,8 +7,8 @@ import { JWT_AUTH } from 'src/common/app'
 export class AuthService {
   constructor(private readonly jwtService: JwtService) { }
 
-  getSecretKey(): string {
-    return JWT_AUTH.secret
+  getSecretKey(): string { 
+    return JWT_AUTH.secret || process.env.SECRET_KEY_JWT
   }
 
   generateAuth(id: string | Types.ObjectId, sdt: string): { tokenAccess: string; tokenRefresh: string } {

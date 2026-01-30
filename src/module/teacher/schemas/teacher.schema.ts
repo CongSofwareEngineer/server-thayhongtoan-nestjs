@@ -1,7 +1,21 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { HydratedDocument, Types } from 'mongoose'
 
-@Schema({ versionKey: false })
+@Schema({
+  versionKey: false,
+  toJSON: {
+    transform: (doc, ret) => {
+      delete ret.password
+      return ret
+    },
+  },
+  toObject: {
+    transform: (doc, ret) => {
+      delete ret.password
+      return ret
+    },
+  },
+})
 export class Teacher {
   _id?: Types.ObjectId
 
@@ -11,7 +25,7 @@ export class Teacher {
   @Prop({ required: true, unique: true })
   sdt: string
 
-  @Prop({ required: true })
+  @Prop({ required: true, select: false })
   password: string
 
   @Prop({ required: true, default: false })
