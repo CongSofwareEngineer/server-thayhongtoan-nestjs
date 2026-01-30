@@ -5,7 +5,8 @@ import { Model } from 'mongoose'
 import { FunService } from 'src/utils/funcService'
 import { getIdObject } from 'src/utils/function'
 import { AuthService } from '../auth/auth.service'
-import * as bcrypt from 'bcrypt'
+import { compareData, hashData } from 'src/utils/hash'
+
 
 @Injectable()
 export class TeacherService {
@@ -32,7 +33,7 @@ export class TeacherService {
       throw new UnauthorizedException('Teacher not found')
     }
 
-    const isPasswordValid = await bcrypt.compare(body.password, teacher.password)
+    const isPasswordValid = await compareData(body.password, teacher.password)
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid password')
     }
@@ -47,8 +48,7 @@ export class TeacherService {
     }
 
     // Hash password before saving
-    const salt = await bcrypt.genSalt()
-    body.password = await bcrypt.hash(body.password, salt)
+    body.password = await hashData(body.password)
 
     return FunService.create(this.teacherModel, body)
   }
@@ -64,8 +64,7 @@ export class TeacherService {
 
     // Hash password if it's being updated
     if (body.password) {
-      const salt = await bcrypt.genSalt()
-      body.password = await bcrypt.hash(body.password, salt)
+      body.password = await hashData(body.password)
     }
 
     return FunService.updateData(this.teacherModel, getIdObject(id), body)

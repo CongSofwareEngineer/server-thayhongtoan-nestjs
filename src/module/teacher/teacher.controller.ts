@@ -42,7 +42,7 @@ export class TeacherController {
     return formatRes(res, data)
   }
 
-  @UseGuards(JwtAuthGuard)
+  // @UseGuards(JwtAuthGuard)
   @ApiBody(TeacherDoc.createBody)
   @Post('create')
   async create(@Res() res, @Body() body) {
