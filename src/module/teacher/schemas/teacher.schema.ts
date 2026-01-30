@@ -1,12 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
 import { HydratedDocument, Types } from 'mongoose'
 
-export enum TeacherSex {
-  MALE = 'male',
-  FEMALE = 'female',
-  OTHER = 'other',
-}
-
 @Schema({ versionKey: false })
 export class Teacher {
   _id?: Types.ObjectId
@@ -26,8 +20,8 @@ export class Teacher {
   @Prop({ required: true })
   age: number
 
-  @Prop({ required: true, enum: TeacherSex })
-  sex: TeacherSex
+  @Prop({ required: true, default: true })
+  sex: boolean // true: male, false: female
 
   @Prop()
   image?: string
