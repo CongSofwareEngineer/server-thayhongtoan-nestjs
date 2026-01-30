@@ -6,6 +6,18 @@ import { json } from 'express'
 import { Transport, MicroserviceOptions } from '@nestjs/microservices'
 import helmet from 'helmet'
 
+
+const darkThemeCss = `
+  .swagger-ui {
+    background-color: #d9d9d9 !important;
+  }
+    .scheme-container{
+      background-color: #d9d9d9 !important;
+    }
+`
+
+
+
 async function bootstrap() {
   const logger = new Logger('Bootstrap')
   const app = await NestFactory.create(AppModule)
@@ -49,7 +61,9 @@ async function bootstrap() {
     .build()
   const document = SwaggerModule.createDocument(app, config)
 
-  SwaggerModule.setup('docs', app, document)
+  SwaggerModule.setup('docs', app, document,{
+     customCss: darkThemeCss,
+  })
   await app.listen(process.env.PORT || 3002)
 }
 bootstrap()
