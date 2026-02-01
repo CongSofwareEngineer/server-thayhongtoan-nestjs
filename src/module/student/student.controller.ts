@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Post, Query, Res, UseGuards } from '@nestjs/common'
 import { StudentService } from './student.service'
-import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger'
 import { formatRes } from 'src/utils/function'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { StudentDoc } from './student.doc'
@@ -11,6 +11,9 @@ import { StudentDoc } from './student.doc'
 export class StudentController {
   constructor(private studentService: StudentService) { }
 
+  @ApiQuery(StudentDoc.queryName)
+  @ApiQuery(StudentDoc.queryAge)
+  @ApiQuery(StudentDoc.queryIdClass)
   @Get('all')
   async getAll(@Res() res, @Query() query) {
     const data = await this.studentService.getAll(query)

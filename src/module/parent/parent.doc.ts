@@ -1,4 +1,4 @@
-import { ApiHeaderOptions, ApiParamOptions, ApiBodyOptions } from '@nestjs/swagger'
+import { ApiHeaderOptions, ApiParamOptions, ApiBodyOptions, ApiQueryOptions } from '@nestjs/swagger'
 
 export const ParentDoc = {
   authorization: {
@@ -12,6 +12,18 @@ export const ParentDoc = {
     required: true,
     description: 'Parent ID',
   } as ApiParamOptions,
+
+  queryName: {
+    name: 'name',
+    required: false,
+    description: 'Search by name',
+  } as ApiQueryOptions,
+
+  queryPhone: {
+    name: 'phone',
+    required: false,
+    description: 'Search by phone',
+  } as ApiQueryOptions,
 
   createBody: {
     schema: {

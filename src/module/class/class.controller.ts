@@ -1,6 +1,6 @@
-import { Body, Controller, Delete, Param, Post, Res, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Query, Res, UseGuards } from '@nestjs/common'
 import { ClassService } from './class.service'
-import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger'
 import { formatRes } from 'src/utils/function'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { ClassDoc } from './class.doc'
@@ -10,6 +10,15 @@ import { ClassDoc } from './class.doc'
 @Controller('class')
 export class ClassController {
   constructor(private classService: ClassService) { }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiQuery(ClassDoc.queryName)
+  @ApiQuery(ClassDoc.queryId)
+  @Get('get-all')
+  async getAll(@Res() res, @Query() query) {
+    const data = await this.classService.getAll(query)
+    return formatRes(res, data)
+  }
 
   @UseGuards(JwtAuthGuard)
   @ApiParam(ClassDoc.idParam)
@@ -39,8 +48,8 @@ export class ClassController {
   @UseGuards(JwtAuthGuard)
   @ApiParam(ClassDoc.idParam)
   @Post('get-full/:id')
-  async getFull(@Res() res, @Param() param) {
-    const data = await this.classService.getFullInfo(param.id)
+  async getFull(@Res() res, @Param() param, @Query() query) {
+    const data = await this.classService.getFullInfo(param.id, query)
     return formatRes(res, data)
   }
 }

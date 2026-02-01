@@ -1,4 +1,4 @@
-import { ApiHeaderOptions, ApiParamOptions, ApiBodyOptions } from '@nestjs/swagger'
+import { ApiHeaderOptions, ApiParamOptions, ApiBodyOptions, ApiQueryOptions } from '@nestjs/swagger'
 
 export const ClassDoc = {
   authorization: {
@@ -12,6 +12,18 @@ export const ClassDoc = {
     required: true,
     description: 'Class ID',
   } as ApiParamOptions,
+
+  queryName: {
+    name: 'name',
+    required: false,
+    description: 'Search by class name',
+  } as ApiQueryOptions,
+
+  queryId: {
+    name: 'id',
+    required: false,
+    description: 'Search by class ID',
+  } as ApiQueryOptions,
 
   createBody: {
     schema: {

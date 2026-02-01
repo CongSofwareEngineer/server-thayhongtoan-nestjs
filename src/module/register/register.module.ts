@@ -1,7 +1,8 @@
 import { MongooseModule } from '@nestjs/mongoose'
 import { DB_COLLECTION } from 'src/common/mongoDB'
-import { Register, RegisterSchema } from './schemas/register'
 import { Module } from '@nestjs/common'
+import { Parent, ParentSchema } from '../parent/schemas/parent.schema'
+import { Student, StudentSchema } from '../student/schemas/student.schema'
 import { RegisterService } from './register.service'
 import { RegisterController } from './register.controller'
 
@@ -9,9 +10,14 @@ import { RegisterController } from './register.controller'
   imports: [
     MongooseModule.forFeature([
       {
-        name: Register.name,
-        schema: RegisterSchema,
-        collection: DB_COLLECTION.Register,
+        name: Parent.name,
+        schema: ParentSchema,
+        collection: DB_COLLECTION.Parent,
+      },
+      {
+        name: Student.name,
+        schema: StudentSchema,
+        collection: DB_COLLECTION.Student,
       },
     ]),
   ],

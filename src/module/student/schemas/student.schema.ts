@@ -23,10 +23,10 @@ export class Student {
   idClass?: Types.ObjectId
 
   @Prop({ type: Types.ObjectId, ref: 'Parent' })
-  idParent: Types.ObjectId
+  idParent?: Types.ObjectId
 
-  @Prop({ required: true, enum: StudentStatus, default: StudentStatus.ACTIVE })
-  status: StudentStatus
+  @Prop({ enum: StudentStatus, default: StudentStatus.ACTIVE })
+  status?: StudentStatus
 
 }
 export type StudentDocument = HydratedDocument<Student>;

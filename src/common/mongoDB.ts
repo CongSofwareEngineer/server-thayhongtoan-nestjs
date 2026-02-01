@@ -1,9 +1,9 @@
 export enum DB_COLLECTION {
-  Register = 'Register',
   Class = 'Class',
   Student = 'Student',
   Attendance = 'Attendance',
   Teacher = 'Teacher',
+  Parent = 'Parent',
 }
 
 export enum PATH_IMG {

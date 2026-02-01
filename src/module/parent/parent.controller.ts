@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Param, Post, Res, UseGuards, Get, Query } from '@nestjs/common'
 import { ParentService } from './parent.service'
-import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger'
+import { ApiBearerAuth, ApiBody, ApiParam, ApiQuery, ApiTags } from '@nestjs/swagger'
 import { formatRes } from 'src/utils/function'
 import { JwtAuthGuard } from '../auth/jwt-auth.guard'
 import { ParentDoc } from './parent.doc'
@@ -12,6 +12,8 @@ export class ParentController {
   constructor(private parentService: ParentService) { }
 
   @UseGuards(JwtAuthGuard)
+  @ApiQuery(ParentDoc.queryName)
+  @ApiQuery(ParentDoc.queryPhone)
   @Get('get-all')
   async getAll(@Res() res, @Query() query) {
     const data = await this.parentService.getAll(query)

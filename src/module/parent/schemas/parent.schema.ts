@@ -14,9 +14,6 @@ export class Parent {
   @Prop()
   address?: string
 
-  @Prop({ type: [{ type: Types.ObjectId, ref: 'Student' }], default: [] })
-  idStudents: Types.ObjectId[]
-
   @Prop()
   note?: string
 }
@@ -26,6 +23,6 @@ export const ParentSchema = SchemaFactory.createForClass(Parent)
 
 ParentSchema.virtual('students', {
   ref: 'Student',
-  localField: 'idStudents',
-  foreignField: '_id',
+  localField: '_id',
+  foreignField: 'idParent',
 })
