@@ -7,6 +7,7 @@ module.exports = {
   },
   plugins: ['@typescript-eslint/eslint-plugin'],
   extends: [
+    'eslint:recommended',
     'plugin:@typescript-eslint/recommended',
   ],
   root: true,
@@ -24,6 +25,26 @@ module.exports = {
     '@typescript-eslint/ban-types': 'error',
     '@typescript-eslint/no-non-null-asserted-optional-chain': 'error',
     'semi': ['error', 'never'],
-    'quotes': ['error', 'single']
+    'quotes': ['error', 'single'],
+    'no-trailing-spaces': 'error',
+    'object-curly-spacing': ['error', 'always'],
+    'padding-line-between-statements': [
+      'warn',
+      {
+        blankLine: 'always',
+        prev: '*',
+        next: 'return',
+      },
+      {
+        blankLine: 'always',
+        prev: ['const', 'let', 'var'],
+        next: '*',
+      },
+      {
+        blankLine: 'any',
+        prev: ['const', 'let', 'var'],
+        next: ['const', 'let', 'var'],
+      },
+    ],
   },
 };

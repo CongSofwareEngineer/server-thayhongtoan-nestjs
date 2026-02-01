@@ -7,7 +7,7 @@ import { JWT_AUTH } from 'src/common/app'
 export class AuthService {
   constructor(private readonly jwtService: JwtService) { }
 
-  getSecretKey(): string { 
+  getSecretKey(): string {
     return JWT_AUTH.secret || process.env.SECRET_KEY_JWT
   }
 
@@ -56,13 +56,16 @@ export class AuthService {
 
   async refreshTokenAccess(tokenRefresh: string): Promise<string> {
     const dataUser: any = this.jwtService.decode(tokenRefresh)
+
     if (!dataUser) return null
+
     return this.generateAuthAccess(dataUser.id, dataUser.sdt)
   }
 
   verifyIdUser(idUser: string, tokenAccess: string): boolean {
     tokenAccess = tokenAccess.replace('Bearer ', '')
     const dataUser: any = this.jwtService.decode(tokenAccess)
+
     return dataUser?.id === idUser
   }
 }

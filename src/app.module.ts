@@ -27,7 +27,7 @@ export const throttlerOptions = {
     },
     {
       name: 'long',
-      ttl: 60000,   // 1 minute  
+      ttl: 60000,   // 1 minute
       limit: 50,    // 50 requests
     },
   ],

@@ -13,6 +13,7 @@ export class ClassService {
   async getAll(@Query() query) {
     const { skip, limit } = getPageLimitSkip(query)
     const match: any = {}
+
     if (query.name) {
       match.name = queryMatchName(query.name)
     }
@@ -26,26 +27,10 @@ export class ClassService {
   }
 
   async create(body: any): Promise<Class | null> {
-    const classNew:Class={
-      name:'Luyện chữ đẹp',
-      price:1000,
-      numberStudent:25,
-      note:'Lớp học dành cho các bé muốn rèn luyện chữ viết',
-      attributes:{
-        time:'Thứ 2,4,6',
-        dateStart:'2022-01-01',
-        dateEnd:'2022-12-31', 
-      }
-      
-    }
-    body=classNew
-    console.log({body})
-    
-
     if (!body) {
       return null
     }
-  
+
     return FunService.create(this.classModel, body)
   }
 
@@ -57,6 +42,7 @@ export class ClassService {
     if (!body) {
       return null
     }
+
     return FunService.updateData(this.classModel, getIdObject(id), body)
   }
 
@@ -83,6 +69,7 @@ export class ClassService {
         },
       ])
       .exec()
+
     return data && data.length > 0 ? data[0] : null
   }
 }
