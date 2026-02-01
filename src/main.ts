@@ -22,6 +22,14 @@ async function bootstrap() {
   const logger = new Logger('Bootstrap')
   const app = await NestFactory.create(AppModule)
 
+  let listDomain: string | string[] = '*'
+
+  if (process.env.ENABLE_LIMIT_DOMAIN) {
+    listDomain = process.env.DOMAIN_VALID.split(',')
+  }
+  app.enableCors({
+    origin: listDomain,
+  })
   // Security headers
   app.use(helmet())
   if (process.env.ENABLE_REDIS) {
@@ -41,16 +49,11 @@ async function bootstrap() {
   await app.startAllMicroservices()
   logger.log('Microservice is listening')
 
-  let listDomain: boolean | string[] = true
-  if (process.env.ENABLE_LIMIT_DOMAIN) {
-    listDomain = process.env.DOMAIN_VALID.split(',')
-  }
+
 
 
   app.use(json({ limit: '20mb' }))
-  app.enableCors({
-    origin: listDomain,
-  })
+
 
   app.useGlobalPipes(new ValidationPipe())
   const config = new DocumentBuilder()
@@ -61,8 +64,8 @@ async function bootstrap() {
     .build()
   const document = SwaggerModule.createDocument(app, config)
 
-  SwaggerModule.setup('docs', app, document,{
-     customCss: darkThemeCss,
+  SwaggerModule.setup('docs', app, document, {
+    customCss: darkThemeCss,
   })
   await app.listen(process.env.PORT || 3002)
 }
