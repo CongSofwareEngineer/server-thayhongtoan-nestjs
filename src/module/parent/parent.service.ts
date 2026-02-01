@@ -13,6 +13,7 @@ export class ParentService {
   async getAll(@Query() query) {
     const { skip, limit } = getPageLimitSkip(query)
     const match: any = {}
+
     if (query.name) {
       match.name = queryMatchName(query.name)
     }
@@ -41,6 +42,7 @@ export class ParentService {
     if (!body) {
       return null
     }
+
     return FunService.create(this.parentModel, body)
   }
 
@@ -52,10 +54,8 @@ export class ParentService {
     if (!body) {
       return null
     }
+
     return FunService.updateData(this.parentModel, getIdObject(id), body)
   }
 
-  async getFullInfo(id: string): Promise<Parent | null> {
-    return this.parentModel.findById(getIdObject(id)).populate('students').exec()
-  }
 }

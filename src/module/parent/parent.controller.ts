@@ -11,12 +11,12 @@ import { ParentDoc } from './parent.doc'
 export class ParentController {
   constructor(private parentService: ParentService) { }
 
-  @UseGuards(JwtAuthGuard)
   @ApiQuery(ParentDoc.queryName)
   @ApiQuery(ParentDoc.queryPhone)
   @Get('get-all')
   async getAll(@Res() res, @Query() query) {
     const data = await this.parentService.getAll(query)
+
     return formatRes(res, data)
   }
 
@@ -25,6 +25,7 @@ export class ParentController {
   @Delete('delete/:id')
   async delete(@Res() res, @Param() param) {
     const data = await this.parentService.delete(param.id)
+
     return formatRes(res, data)
   }
 
@@ -34,6 +35,7 @@ export class ParentController {
   @Post('update/:id')
   async update(@Res() res, @Param() param, @Body() body) {
     const data = await this.parentService.update(param.id, body)
+
     return formatRes(res, data)
   }
 
@@ -42,14 +44,9 @@ export class ParentController {
   @Post('create')
   async create(@Res() res, @Body() body) {
     const data = await this.parentService.create(body)
+
     return formatRes(res, data)
   }
 
-  @UseGuards(JwtAuthGuard)
-  @ApiParam(ParentDoc.idParam)
-  @Post('get-full/:id')
-  async getFull(@Res() res, @Param() param) {
-    const data = await this.parentService.getFullInfo(param.id)
-    return formatRes(res, data)
-  }
+
 }

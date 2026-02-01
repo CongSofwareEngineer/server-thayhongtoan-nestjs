@@ -11,12 +11,12 @@ import { ClassDoc } from './class.doc'
 export class ClassController {
   constructor(private classService: ClassService) { }
 
-  @UseGuards(JwtAuthGuard)
   @ApiQuery(ClassDoc.queryName)
   @ApiQuery(ClassDoc.queryId)
   @Get('get-all')
   async getAll(@Res() res, @Query() query) {
     const data = await this.classService.getAll(query)
+
     return formatRes(res, data)
   }
 
@@ -25,6 +25,7 @@ export class ClassController {
   @Delete('delete/:id')
   async delete(@Res() res, @Param() param) {
     const data = await this.classService.delete(param.id)
+
     return formatRes(res, data)
   }
 
@@ -34,6 +35,7 @@ export class ClassController {
   @Post('update/:id')
   async update(@Res() res, @Param() param, @Body() body) {
     const data = await this.classService.update(param.id, body)
+
     return formatRes(res, data)
   }
 
@@ -42,6 +44,7 @@ export class ClassController {
   @Post('create')
   async create(@Res() res, @Body() body) {
     const data = await this.classService.create(body)
+
     return formatRes(res, data)
   }
 
@@ -50,6 +53,7 @@ export class ClassController {
   @Post('get-full/:id')
   async getFull(@Res() res, @Param() param, @Query() query) {
     const data = await this.classService.getFullInfo(param.id, query)
+
     return formatRes(res, data)
   }
 }
