@@ -15,6 +15,7 @@ export class TeacherController {
   @Post('login')
   async login(@Res() res, @Body() body) {
     const data = await this.teacherService.login(body)
+
     res.cookie('tokenAccess', data.tokens.tokenAccess, {
       httpOnly: true,
       secure: true,
@@ -27,12 +28,14 @@ export class TeacherController {
       sameSite: 'strict',
       maxAge: 15 * 24 * 60 * 60 * 1000,//15 days
     })
+
     return formatRes(res, { teacher: data.teacher })
   }
 
   @Get('all')
   async getAll(@Res() res, @Query() query) {
     const data = await this.teacherService.getAll(query)
+
     return formatRes(res, data)
   }
 
@@ -41,6 +44,7 @@ export class TeacherController {
   @Delete('delete/:id')
   async delete(@Res() res, @Param() param) {
     const data = await this.teacherService.delete(param.id)
+
     return formatRes(res, data)
   }
 
@@ -50,6 +54,7 @@ export class TeacherController {
   @Post('update/:id')
   async update(@Res() res, @Param() param, @Body() body) {
     const data = await this.teacherService.update(param.id, body)
+
     return formatRes(res, data)
   }
 
@@ -58,6 +63,7 @@ export class TeacherController {
   @Post('create')
   async create(@Res() res, @Body() body) {
     const data = await this.teacherService.create(body)
+
     return formatRes(res, data)
   }
 }

@@ -29,9 +29,11 @@ async function bootstrap() {
   }
   app.enableCors({
     origin: listDomain,
+    credentials: true,
   })
   // Security headers
   app.use(helmet())
+
   if (process.env.ENABLE_REDIS) {
     app.connectMicroservice<MicroserviceOptions>({
       transport: Transport.REDIS,
