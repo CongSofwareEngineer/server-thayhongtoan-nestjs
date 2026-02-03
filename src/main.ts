@@ -5,6 +5,7 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
 import { json } from 'express'
 import { Transport, MicroserviceOptions } from '@nestjs/microservices'
 import helmet from 'helmet'
+import * as cookieParser from 'cookie-parser'
 
 
 const darkThemeCss = `
@@ -21,6 +22,8 @@ const darkThemeCss = `
 async function bootstrap() {
   const logger = new Logger('Bootstrap')
   const app = await NestFactory.create(AppModule)
+
+  app.use(cookieParser())
 
   let listDomain: string | string[] = '*'
 

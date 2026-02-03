@@ -36,7 +36,7 @@ export class AuthService {
     token: string,
     isRefreshToken: boolean = false,
   ):
-    | boolean
+    | false
     | {
       id: string;
       sdt: string;

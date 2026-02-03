@@ -15,6 +15,16 @@ export class TeacherService {
     private authService: AuthService
   ) { }
 
+  async getInfoMe(tokenAccess: string) {
+    const dataVerify = this.authService.verifyAth(tokenAccess)
+
+    if (!dataVerify) {
+      throw new UnauthorizedException('Invalid or expired token')
+    }
+
+    return this.teacherModel.findById(getIdObject(dataVerify.id))
+  }
+
   async getAll(@Query() query) {
     return FunService.getDataByLimit(this.teacherModel, query)
   }
@@ -29,18 +39,21 @@ export class TeacherService {
     }
 
     const teacher = await this.teacherModel.findOne({ sdt: body.sdt }).select('+password')
+
     if (!teacher) {
       throw new UnauthorizedException('Teacher not found')
     }
 
     const isPasswordValid = await compareData(body.password, teacher.password)
+
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid password')
     }
 
     const tokens = this.authService.generateAuth(teacher._id, teacher.sdt)
-    
+
     const teacherObject = teacher.toObject()
+
     delete teacherObject.password
 
     return {

@@ -11,14 +11,26 @@ export class AuthController {
 
   @Post('/refresh')
   async refreshToken(@Res() res, @Request() req) {
-    const token = req.headers.authorization
-    const dataVerify = this.authService.verifyAth(token, true)
+    const tokenRefresh = req.cookies.tokenRefresh || ''
+
+
+    const dataVerify = this.authService.verifyAth(tokenRefresh, true)
+
 
     if (dataVerify && typeof dataVerify !== 'boolean') {
       const tokenAccess = this.authService.generateAuthAccess(dataVerify.id, dataVerify.sdt)
-      return formatRes(res, { token: tokenAccess })
+
+      res.cookie('tokenAccess', tokenAccess, {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'strict',
+        maxAge: 15 * 60 * 1000,//15 min
+      })
+
+      return formatRes(res, { status: true })
     }
-    return formatRes(res, null)
+
+    return formatRes(res, { status: false })
   }
 
   @Get('/ping')

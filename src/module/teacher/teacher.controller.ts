@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Param, Post, Query, Res, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Headers, Param, Post, Query, Request, Res, UseGuards } from '@nestjs/common'
 import { TeacherService } from './teacher.service'
 import { ApiBearerAuth, ApiBody, ApiParam, ApiTags } from '@nestjs/swagger'
 import { formatRes } from 'src/utils/function'
@@ -10,6 +10,15 @@ import { TeacherDoc } from './teacher.doc'
 @Controller('teacher')
 export class TeacherController {
   constructor(private teacherService: TeacherService) { }
+
+  @Post('logout')
+  async logout(@Res() res) {
+    res.clearCookie('tokenAccess')
+    res.clearCookie('tokenRefresh')
+
+    return formatRes(res, { status: 'success' })
+  }
+
 
   @ApiBody(TeacherDoc.loginBody)
   @Post('login')
@@ -29,7 +38,17 @@ export class TeacherController {
       maxAge: 15 * 24 * 60 * 60 * 1000,//15 days
     })
 
-    return formatRes(res, { teacher: data.teacher })
+    return formatRes(res, data.teacher)
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('info-me')
+  async infoMe(@Res() res, @Request() req) {
+    const tokenAccess = req.cookies.tokenAccess
+
+    const user = await this.teacherService.getInfoMe(tokenAccess)
+
+    return formatRes(res, user)
   }
 
   @Get('all')
