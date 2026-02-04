@@ -28,13 +28,13 @@ export class TeacherController {
     res.cookie('tokenAccess', data.tokens.tokenAccess, {
       httpOnly: true,
       secure: true,
-      sameSite: 'strict',
+      sameSite: 'lax',
       maxAge: 15 * 60 * 1000,//15 min
     })
     res.cookie('tokenRefresh', data.tokens.tokenRefresh, {
       httpOnly: true,
       secure: true,
-      sameSite: 'strict',
+      sameSite: 'lax',
       maxAge: 15 * 24 * 60 * 60 * 1000,//15 days
     })
 
