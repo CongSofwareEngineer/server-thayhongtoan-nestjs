@@ -25,6 +25,7 @@ export class AuthController {
         secure: true,
         sameSite: 'lax',
         maxAge: 15 * 60 * 1000,//15 min
+        path: '/'
       })
 
       return formatRes(res, { status: true })

@@ -30,12 +30,14 @@ export class TeacherController {
       secure: true,
       sameSite: 'lax',
       maxAge: 15 * 60 * 1000,//15 min
+      path: '/'
     })
     res.cookie('tokenRefresh', data.tokens.tokenRefresh, {
       httpOnly: true,
       secure: true,
       sameSite: 'lax',
       maxAge: 15 * 24 * 60 * 60 * 1000,//15 days
+      path: '/'
     })
 
     return formatRes(res, data.teacher)
